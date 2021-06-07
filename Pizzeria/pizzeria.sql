@@ -7,6 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema Pizzeria
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `Pizzeria` ;
 
 -- -----------------------------------------------------
 -- Schema Pizzeria
@@ -183,10 +184,11 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Pizzeria`.`producte` (
   `producte_id` INT NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(45) NOT NULL,
+  `Tipo` VARCHAR(20) NOT NULL,
   `descripcio` VARCHAR(45) NULL,
   `imatge_url` VARCHAR(45) NULL,
   `preu` DECIMAL(6,2) NOT NULL,
-  `categoria_id` INT NOT NULL,
+  `categoria_id` INT NULL,
   PRIMARY KEY (`producte_id`),
   INDEX `fk_producte_categoria1_idx` (`categoria_id` ASC),
   CONSTRAINT `fk_producte_categoria1`
@@ -225,3 +227,86 @@ ENGINE = InnoDB;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+
+INSERT INTO categoria(nom) VALUES ('Vegetarianas');
+INSERT INTO categoria(nom) VALUES ('Veganas');
+INSERT INTO categoria(nom) VALUES ('Tradicionales');
+
+INSERT INTO producte(nom, tipo, descripcio, imatge_url, preu, categoria_id) VALUES('Coca-Cola', 'Bebida',null, null, 3.50, null);
+INSERT INTO producte(nom, tipo, descripcio, imatge_url, preu, categoria_id) VALUES('4 quesos', 'Pizza',null, null, 8.00, null);
+INSERT INTO producte(nom, tipo, descripcio, imatge_url, preu, categoria_id) VALUES('Margherita', 'Pizza',null, null, 2.50, null);
+INSERT INTO producte(nom, tipo, descripcio, imatge_url, preu, categoria_id) VALUES('Con panceta', 'Hamburgueses',null, null, 3.50, null);
+INSERT INTO producte(nom, tipo, descripcio, imatge_url, preu, categoria_id) VALUES('Peperoni', 'Pizza',null, null, 8.50, null);
+INSERT INTO producte(nom, tipo, descripcio, imatge_url, preu, categoria_id) VALUES('Vegana', 'Pizza',null, null, 13.50, null);
+
+INSERT INTO provincia(nom) VALUES ('Barcelona');
+INSERT INTO provincia(nom) VALUES ('Madrid');
+INSERT INTO provincia(nom) VALUES ('Málaga');
+INSERT INTO localitat(nom, provincia_id) VALUES ('Barcelona', 1);
+INSERT INTO localitat(nom, provincia_id) VALUES ('Madrid', 1);
+INSERT INTO localitat(nom, provincia_id) VALUES ('Girona', 1);
+INSERT INTO adreca(adreca, codi_postal, localitat_id) VALUES ('Marina 254', '08041', 1);
+INSERT INTO adreca(adreca, codi_postal, localitat_id) VALUES ('Fastenrath 66', '08041', 2);
+INSERT INTO adreca(adreca, codi_postal, localitat_id) VALUES ('Góngora', '08041', 3);
+INSERT INTO adreca(adreca, codi_postal, localitat_id) VALUES ('Otro 2224', '08041', 2);
+INSERT INTO adreca(adreca, codi_postal, localitat_id) VALUES ('Inexistente 5554', '08041', 1);
+INSERT INTO botiga(adreca_id) VALUES (1);
+INSERT INTO botiga(adreca_id) VALUES (2);
+INSERT INTO botiga(adreca_id) VALUES (3);
+INSERT INTO empleat(nom, cognom, nif, telefon, tasca, botiga_id) VALUES ('Pedro', 'Andrade', 'y6464637e', '555555555', 'repartidor',1);
+INSERT INTO empleat(nom, cognom, nif, telefon, tasca, botiga_id) VALUES ('Maic', 'foooo', 'y6488837e', '555555555', 'repartidor',1);
+INSERT INTO empleat(nom, cognom, nif, telefon, tasca, botiga_id) VALUES ('Pau', 'Andrade', 'y622227e', '555555555', 'cocinero',1);
+INSERT INTO cliente(nom, cognom, telefon, adreca_id) VALUES ('Mauri', 'Pari', '666666666', 1);
+INSERT INTO cliente(nom, cognom, telefon, adreca_id) VALUES ('Pedro', 'Sanchez', '666666666', 4);
+INSERT INTO cliente(nom, cognom, telefon, adreca_id) VALUES ('Hendrix', 'Paloosa', '666666666', 5);
+INSERT INTO cliente(nom, cognom, telefon, adreca_id) VALUES ('Joaquina', 'Carlota', '666666666', 2);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 1, 99.78, 1,1,3);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 0, 99.78, 3,2,1);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 1, 99.78, 3,1,2);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 0, 99.78, 1,2,1);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 1, 99.78, 3,1,3);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 0, 99.78, 1,2,1);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 1, 99.78, 2,1,3);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 1, 99.78, 1,3,1);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 1, 99.78, 3,4,2);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 0, 99.78, 1,1,2);
+INSERT INTO comande(data_compra, repartir, preu_total, botiga_id, cliente_id, empleat_id) VALUES ('2021-01-20 00:00:01', 0, 99.78, 2,4,1);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(1, 8.99, 4, 1);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(2, 8.99, 1, 2);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(3, 8.99, 2, 5);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(2, 8.99, 1, 9);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(3, 8.99, 4, 8);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(5, 8.99, 1, 7);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(6, 8.99, 2, 6);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(1, 8.99, 1, 5);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(1, 8.99, 2, 4);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(4, 8.99, 1, 3);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(2, 8.99, 3, 2);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(1, 8.99, 1, 1);
+INSERT INTO comande_detall(quantitat, preu_cadascun, producte_id, comande_id) VALUES(3, 8.99, 2, 1);
+INSERT INTO lliurament(comande_id, data_lliurament) VALUES (1, '2021-01-20 00:00:01');
+INSERT INTO lliurament(comande_id, data_lliurament) VALUES (2, '2021-01-20 00:00:01');
+INSERT INTO lliurament(comande_id, data_lliurament) VALUES (3, '2021-01-20 00:00:01');
+
+
+SELECT l.nom, sum(cd.quantitat) as QntasBebidas
+FROM comande_detall cd
+JOIN comande c
+ON c.comande_id = cd.comande_id
+JOIN  producte p
+ON cd.producte_id = p.producte_id
+JOIN botiga b
+ON b.botiga_id = c.botiga_id
+JOIN adreca a
+ON b.adreca_id = a.adreca_id
+JOIN localitat l
+ON l.localitat_id = a.localitat_id
+WHERE p.tipo = 'bebida'
+group by l.nom;
+
+SELECT e.nom, count(c.comande_id) as QtasComandes
+FROM comande c
+JOIN empleat e
+ON c.empleat_id = e.empleat_id
+GROUP BY e.nom;

@@ -7,6 +7,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema youtube
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `youtube` ;
 
 -- -----------------------------------------------------
 -- Schema youtube
@@ -21,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `youtube`.`Videos` (
   `idVideos` INT NOT NULL AUTO_INCREMENT,
   `Títol` VARCHAR(45) NULL,
   `Descripcion` VARCHAR(45) NULL,
-  `Tamaño` VARCHAR(45) NULL,
+  `Tamano` VARCHAR(45) NULL,
   `Nom_Arxiu` VARCHAR(45) NULL,
   `Durada` VARCHAR(45) NULL,
   `Thumbnail` VARCHAR(45) NULL,
@@ -87,6 +88,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `youtube`.`Likes` (
   `Like_Id` INT NOT NULL,
+  `Tipo` VARCHAR(7) NOT NULL,
   `last_update` DATETIME NULL,
   PRIMARY KEY (`Like_Id`))
 ENGINE = InnoDB
@@ -116,38 +118,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `youtube`.`Dislikes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youtube`.`Dislikes` (
-  `Dislike_id` INT NOT NULL AUTO_INCREMENT,
-  `last_update` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`Dislike_id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `youtube`.`Videos_has_Dislikes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youtube`.`Videos_has_Dislikes` (
-  `Videos_idVideos` INT NOT NULL,
-  `Dislikes_Dislike_id` INT NOT NULL,
-  PRIMARY KEY (`Videos_idVideos`, `Dislikes_Dislike_id`),
-  INDEX `fk_Videos_has_Dislikes_Dislikes1_idx` (`Dislikes_Dislike_id` ASC),
-  INDEX `fk_Videos_has_Dislikes_Videos1_idx` (`Videos_idVideos` ASC),
-  CONSTRAINT `fk_Videos_has_Dislikes_Videos1`
-    FOREIGN KEY (`Videos_idVideos`)
-    REFERENCES `youtube`.`Videos` (`idVideos`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Videos_has_Dislikes_Dislikes1`
-    FOREIGN KEY (`Dislikes_Dislike_id`)
-    REFERENCES `youtube`.`Dislikes` (`Dislike_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `youtube`.`Canals`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `youtube`.`Canals` (
@@ -159,28 +129,6 @@ CREATE TABLE IF NOT EXISTS `youtube`.`Canals` (
   UNIQUE INDEX `Nom_UNIQUE` (`Nom` ASC))
 ENGINE = InnoDB
 COMMENT = '\n';
-
-
--- -----------------------------------------------------
--- Table `youtube`.`Canals_has_User`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youtube`.`Canals_has_User` (
-  `Canals_Canal_Id` INT NOT NULL,
-  `User_User_Id` INT NOT NULL,
-  PRIMARY KEY (`Canals_Canal_Id`, `User_User_Id`),
-  INDEX `fk_Canals_has_User_User1_idx` (`User_User_Id` ASC),
-  INDEX `fk_Canals_has_User_Canals1_idx` (`Canals_Canal_Id` ASC),
-  CONSTRAINT `fk_Canals_has_User_Canals1`
-    FOREIGN KEY (`Canals_Canal_Id`)
-    REFERENCES `youtube`.`Canals` (`Canal_Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Canals_has_User_User1`
-    FOREIGN KEY (`User_User_Id`)
-    REFERENCES `youtube`.`User` (`User_Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -244,50 +192,6 @@ CREATE TABLE IF NOT EXISTS `youtube`.`Videos_has_Etiquetas` (
   CONSTRAINT `fk_Videos_has_Etiquetas_Etiquetas1`
     FOREIGN KEY (`Etiquetas_idEtiquetas`)
     REFERENCES `youtube`.`Etiquetas` (`idEtiquetas`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `youtube`.`User_has_Dislikes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youtube`.`User_has_Dislikes` (
-  `User_User_Id` INT NOT NULL,
-  `Dislikes_Dislike_id` INT NOT NULL,
-  PRIMARY KEY (`User_User_Id`, `Dislikes_Dislike_id`),
-  INDEX `fk_User_has_Dislikes_Dislikes1_idx` (`Dislikes_Dislike_id` ASC),
-  INDEX `fk_User_has_Dislikes_User1_idx` (`User_User_Id` ASC),
-  CONSTRAINT `fk_User_has_Dislikes_User1`
-    FOREIGN KEY (`User_User_Id`)
-    REFERENCES `youtube`.`User` (`User_Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_User_has_Dislikes_Dislikes1`
-    FOREIGN KEY (`Dislikes_Dislike_id`)
-    REFERENCES `youtube`.`Dislikes` (`Dislike_id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `youtube`.`User_has_Likes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youtube`.`User_has_Likes` (
-  `User_User_Id` INT NOT NULL,
-  `Likes_Like_Id` INT NOT NULL,
-  PRIMARY KEY (`User_User_Id`, `Likes_Like_Id`),
-  INDEX `fk_User_has_Likes_Likes1_idx` (`Likes_Like_Id` ASC),
-  INDEX `fk_User_has_Likes_User1_idx` (`User_User_Id` ASC),
-  CONSTRAINT `fk_User_has_Likes_User1`
-    FOREIGN KEY (`User_User_Id`)
-    REFERENCES `youtube`.`User` (`User_Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_User_has_Likes_Likes1`
-    FOREIGN KEY (`Likes_Like_Id`)
-    REFERENCES `youtube`.`Likes` (`Like_Id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -421,28 +325,6 @@ CREATE TABLE IF NOT EXISTS `youtube`.`Comments_has_Likes` (
   CONSTRAINT `fk_Comments_has_Likes_Likes1`
     FOREIGN KEY (`Likes_Like_Id`)
     REFERENCES `youtube`.`Likes` (`Like_Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `youtube`.`Comments_has_Dislikes`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `youtube`.`Comments_has_Dislikes` (
-  `Comments_Comment_Id` INT NOT NULL,
-  `Dislikes_Dislike_id` INT NOT NULL,
-  PRIMARY KEY (`Comments_Comment_Id`, `Dislikes_Dislike_id`),
-  INDEX `fk_Comments_has_Dislikes_Dislikes1_idx` (`Dislikes_Dislike_id` ASC),
-  INDEX `fk_Comments_has_Dislikes_Comments1_idx` (`Comments_Comment_Id` ASC),
-  CONSTRAINT `fk_Comments_has_Dislikes_Comments1`
-    FOREIGN KEY (`Comments_Comment_Id`)
-    REFERENCES `youtube`.`Comments` (`Comment_Id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Comments_has_Dislikes_Dislikes1`
-    FOREIGN KEY (`Dislikes_Dislike_id`)
-    REFERENCES `youtube`.`Dislikes` (`Dislike_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
