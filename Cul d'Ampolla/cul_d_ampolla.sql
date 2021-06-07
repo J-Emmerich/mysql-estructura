@@ -140,30 +140,29 @@ SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
-
 INSERT INTO adressa(carrer, numero, piso, porta, ciutat, codigo_postal, pais) VALUES ('Marina', '67', '1', '1', 'Barcelona', '08034', 'ES');
 INSERT INTO adressa(carrer, numero, piso, porta, ciutat, codigo_postal, pais) VALUES ('Fastenrath', '67', '1', '1', 'Barcelona', '08044', 'ES');
 INSERT INTO adressa(carrer, numero, piso, porta, ciutat, codigo_postal, pais) VALUES ('Góngora', '67', '1', '1', 'Barcelona', '08035', 'ES');
 INSERT INTO adressa(carrer, numero, piso, porta, ciutat, codigo_postal, pais) VALUES ('Medeiros', '67', '1', '1', 'Barcelona', '08065', 'ES');
 INSERT INTO adressa(carrer, numero, piso, porta, ciutat, codigo_postal, pais) VALUES ('Juliao', '67', '1', '1', 'Barcelona', '08024', 'ES');
 
-INSERT INTO clientes(nom, cognoms, telefon, email,adressa_adressa_id) VALUES('Linguado', 'Macalé', '3232323434', 'rafaelito@email.com',3);
-INSERT INTO clientes(nom, cognoms, telefon, email,adressa_adressa_id) VALUES('Rafael', 'Mistura', '33250987', 'rafaelito@email.com',2);
-INSERT INTO clientes(nom, cognoms, telefon, email,adressa_adressa_id) VALUES('Pizzara', 'Parangolé', '9995554432', 'macanuda@email.com',2);
-INSERT INTO proveidor(nif,nom, telefon, fax, adressa_adressa_id) VALUES('y44434567e', 'Joao', '88876578',null,1);
-INSERT INTO proveidor(nif,nom, telefon, fax, adressa_adressa_id) VALUES('X8882332f', 'Pamplona', '2376578',null,2);
+INSERT INTO clientes(nom, cognoms, telefon, email,adressa_id) VALUES('Linguado', 'Macalé', '3232323434', 'rafaelito@email.com',3);
+INSERT INTO clientes(nom, cognoms, telefon, email,adressa_id) VALUES('Rafael', 'Mistura', '33250987', 'rafaelito@email.com',2);
+INSERT INTO clientes(nom, cognoms, telefon, email,adressa_id) VALUES('Pizzara', 'Parangolé', '9995554432', 'macanuda@email.com',2);
+INSERT INTO proveidor(nif,nom, telefon, fax, adressa_id) VALUES('y44434567e', 'Joao', '88876578',null,1);
+INSERT INTO proveidor(nif,nom, telefon, fax, adressa_id) VALUES('X8882332f', 'Pamplona', '2376578',null,2);
 
-INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_proveidor_id)
+INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_id)
 values ('Bamba', '-0.25', '0.6', 'azul', 'azul', 'standard', 'blanca', 76.89, 1);
-INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_proveidor_id)
+INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_id)
 values ('Bamba', '2.25', '-0.6', 'azul', 'azul', 'standard', 'blanca', 143.89, 1);
-INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_proveidor_id)
+INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_id)
 values ('Bacon', '-0.25', '2.6', 'azul', 'azul', 'especial', 'blanca', 444.89, 1);
-INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_proveidor_id)
+INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_id)
 values ('Merchan', '-0.25', '0.6', 'azul', 'azul', 'standard', 'blanca', 176.66, 2);
-INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_proveidor_id)
+INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_id)
 values ('Merchan', '-0.25', '0.6', 'azul', 'azul', 'standard', 'blanca', 176.66, 1);
-INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_proveidor_id)
+INSERT INTO ulleres(marca, graduació_dreta, graduació_esquerra, color_dreta, color_esquerra, muntura, color_muntura, precio, proveidor_id)
 values ('Miriade', '-0.25', '0.6', 'azul', 'azul', 'standard', 'blanca', 323.66, 2);
 
 INSERT INTO Empleados(nom) VALUES ('Cannonball Adderley');
@@ -172,11 +171,36 @@ INSERT INTO Empleados(nom) VALUES ('Coltrane');
 INSERT INTO Empleados(nom) VALUES ('Miles');
 INSERT INTO Empleados(nom) VALUES ('Chet');
 
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 4, '2020-05-05 00:00:01', 1,3);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 3, '2020-08-00 00:00:01', 3,2);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 5, '2020-04-10 00:00:01', 3,1);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 2, '2020-10-10 00:00:01', 3,1);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 4, '2021-01-12 00:00:01', 2,5);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 2, '2020-04-21 00:00:01', 2,4);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 1, '2020-03-24 00:00:01', 2,4);
-INSERT INTO comandes(total, clientes_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 1, '2021-06-05 00:00:01', 2,4);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 1, '2020-05-05 00:00:01', 1,3);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 3, '2020-08-01 00:00:01', 3,2);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 2, '2020-04-10 00:00:01', 3,1);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 2, '2020-10-10 00:00:01', 3,1);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 3, '2021-01-12 00:00:01', 2,5);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 2, '2020-04-21 00:00:01', 2,4);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 3, '2020-03-24 00:00:01', 2,4);
+INSERT INTO comandes(total, cliente_id, fecha_compra, empleados_id, ulleres_id) VALUES (2322.34, 1, '2021-06-05 00:00:01', 2,4);
+
+
+
+SELECT clientes.nom, clientes.cliente_id, count(clientes.cliente_id) AS howmany
+FROM comandes
+JOIN clientes
+ON clientes.cliente_id = comandes.cliente_id
+WHERE comandes.fecha_compra > '2020-01-20 00:00:01'
+GROUP BY comandes.cliente_id;
+
+SELECT ulleres.marca, proveidor.proveidor_id, proveidor.nom FROM ulleres
+JOIN proveidor
+ON ulleres.proveidor_id = proveidor.proveidor_id
+JOIN comandes
+ON ulleres.ulleres_id = comandes.comande_id
+JOIN clientes
+ON comandes.cliente_id = clientes.cliente_id
+WHERE comandes.fecha_compra < '2021-01-20 00:00:01';
+
+SELECT ulleres.marca, empleados.nom FROM ulleres
+JOIN comandes
+ON comandes.ulleres_id = ulleres.ulleres_id
+JOIN empleados
+ON comandes.empleados_id = empleados.empleados_id
+WHERE comandes.fecha_compra > '2020-06-2020';
